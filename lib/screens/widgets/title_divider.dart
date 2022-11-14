@@ -18,7 +18,7 @@ class TitleDivider extends StatelessWidget {
         children: [
           Text(
             title,
-            style: greyTextStyle,
+            style: blackTextStyle,
           ),
           const Spacer(),
           TextButton(
@@ -27,7 +27,7 @@ class TitleDivider extends StatelessWidget {
                 buttonTitle,
                 style: buttonTextStyle,
               )),
-          const Icon(Icons.arrow_forward)
+          const Icon(Icons.arrow_forward_ios_rounded)
         ],
       ),
     );

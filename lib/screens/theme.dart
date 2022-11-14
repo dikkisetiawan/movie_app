@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 //main Color
-Color kPrimaryColor = const Color(0xFF2d41b3); //0xff56DCC5
-Color kSecondaryColor = const Color(0xFFeb6a90); //0xFF171A1F
-Color kOrangeColor = const Color(0xffe98547);
+Color kPrimaryColor = const Color(0xFF26395A); //0xff56DCC5
+Color kSecondaryColor = const Color(0xFFFEBE04); //0xFF171A1F
+Color kRedColor = const Color(0xffB8363E);
 Color kBlueColor = const Color(0xff566CDC);
 Color kGreenColor = const Color(0xff8BD97B);
 Color kPinkColor = const Color(0xffEB819C);
@@ -16,10 +16,11 @@ Color kSuccessColor = const Color(0xffC3ED6E);
 Color kInfoColor = const Color(0xff60B2F0);
 
 //Gray Color Set
-Color kBackgroundColor = const Color(0xFFf2f3f8); //0xFF000000
-Color kGreyColor = const Color(0xFF9095A1);
+Color kBackgroundColor = kWhiteColor; //0xFF000000
+Color kGreyColor = const Color(0xFFf4f4f4);
+Color kDarkGreyColor = const Color(0xFF9599a4);
 Color kWhiteColor = const Color(0xFFFFFFFF);
-Color kBlackColor = Color.fromARGB(255, 34, 34, 34);
+Color kBlackColor = const Color(0xFF333333);
 
 FontWeight light = FontWeight.w300;
 FontWeight regular = FontWeight.w400;
@@ -30,7 +31,7 @@ FontWeight extraBold = FontWeight.w800;
 FontWeight black = FontWeight.w900;
 
 TextStyle blackTextStyle =
-    GoogleFonts.manrope(color: kBlackColor, fontWeight: bold);
+    GoogleFonts.manrope(color: kBlackColor, fontSize: 18, fontWeight: bold);
 
 TextStyle whiteTextStyle =
     GoogleFonts.manrope(color: kWhiteColor, fontSize: 14, fontWeight: bold);
@@ -39,10 +40,10 @@ TextStyle greyTextStyle =
     GoogleFonts.manrope(color: kGreyColor, fontSize: 18, fontWeight: bold);
 
 TextStyle buttonTextStyle =
-    GoogleFonts.manrope(color: kBlueColor, fontSize: 14, fontWeight: bold);
+    GoogleFonts.manrope(color: kPrimaryColor, fontSize: 14, fontWeight: bold);
 
 //Circular Value
-const defaultCircular = 15.0;
+const defaultCircular = 20.0;
 const defaultTopLeftCircular = 100.0;
 const defaultMargin = 30.0;
 

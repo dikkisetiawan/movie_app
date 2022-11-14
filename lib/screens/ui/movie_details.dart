@@ -1,4 +1,3 @@
-import '/screens/widgets/k_app_bar.dart';
 import 'package:flutter/material.dart';
 
 import '../theme.dart';
@@ -12,7 +11,6 @@ class MovieDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kBackgroundColor,
-      appBar: kAppBar().myAppBar('Training'),
       body: ListView(
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.symmetric(vertical: 10.0),
@@ -50,7 +48,8 @@ class MovieDetails extends StatelessWidget {
                       child: Image(
                           width: 80,
                           height: 100,
-                          image: AssetImage('myassets/running.png')),
+                          image: AssetImage(
+                              'assets/undraw_Video_streaming_re_v3qg.png')),
                     ))
               ],
             ),
@@ -136,7 +135,8 @@ class MovieDetails extends StatelessWidget {
                   decoration: const BoxDecoration(
                       image: DecorationImage(
                           alignment: Alignment.centerLeft,
-                          image: AssetImage('myassets/park.png'))),
+                          image: AssetImage(
+                              'assets/undraw_Video_streaming_re_v3qg.png'))),
                   height: 80,
                 )),
             Expanded(
@@ -169,10 +169,10 @@ class MovieDetails extends StatelessWidget {
       crossAxisSpacing: defaultMargin,
       crossAxisCount: 2,
       children: [
-        areaOfFocusTile('myassets/undraw_Grand_slam_re_44gi.png'),
-        areaOfFocusTile('myassets/undraw_Running_wild_re_fq9r.png'),
-        areaOfFocusTile('myassets/undraw_indoor_bike_pwa4.png'),
-        areaOfFocusTile('myassets/undraw_Stability_ball_b4ia.png'),
+        areaOfFocusTile('assets/undraw_Video_streaming_re_v3qg.png'),
+        areaOfFocusTile('assets/undraw_Video_streaming_re_v3qg.png'),
+        areaOfFocusTile('assets/undraw_Video_streaming_re_v3qg.png'),
+        areaOfFocusTile('assets/undraw_Video_streaming_re_v3qg.png'),
       ],
     );
   }

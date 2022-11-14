@@ -1,4 +1,4 @@
-import '/screens/widgets/k_app_bar.dart';
+import 'dart:math';
 
 import '../widgets/title_divider.dart';
 import '../widgets/rounded_top_right_container.dart';
@@ -12,28 +12,195 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kBackgroundColor,
-      appBar: kAppBar().myAppBar('My Diary'),
-      body: ListView(
-          physics: BouncingScrollPhysics(),
-          padding: const EdgeInsets.symmetric(vertical: 10.0),
-          children: [
-            TitleDivider(
-              title: 'Mediterranean diet',
-              buttonTitle: 'Details',
-            ),
-            RoundedTopRightContainer(child: mainStat()),
-            TitleDivider(
-              title: 'Meals Today',
-              buttonTitle: 'Customize',
-            ),
-            mealListCategory(),
-            TitleDivider(
-              title: 'Body Measurements',
-              buttonTitle: 'Today',
-            ),
-            RoundedTopRightContainer(child: mainStat()),
-          ]),
+      appBar: kAppBar(),
+      body: ListView(children: [
+        locationDropdown(),
+        banner(),
+        TitleDivider(
+          title: 'Sedang Tayang',
+          buttonTitle: 'Semua',
+        ),
+        kTabBar(),
+        kTabBarView(),
+        // RoundedTopRightContainer(child: mainStat()),
+        // TitleDivider(
+        //   title: 'Meals Today',
+        //   buttonTitle: 'Customize',
+        // ),
+        // mealListCategory(),
+        // TitleDivider(
+        //   title: 'Body Measurements',
+        //   buttonTitle: 'Today',
+        // ),
+      ]),
     );
+  }
+
+  Widget banner() {
+    return Container(
+      width: double.infinity,
+      height: 200,
+      color: kSecondaryColor,
+      child: Text('banner'),
+    );
+  }
+
+  Widget locationDropdown() {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 5.0),
+      color: kGreyColor,
+      child: Row(
+        children: [
+          IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.pin_drop,
+                color: kDarkGreyColor,
+              )),
+          Text(
+            'Surabaya'.toUpperCase(),
+            style: blackTextStyle,
+          ),
+          Spacer(),
+          IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.arrow_drop_down,
+                color: kDarkGreyColor,
+              ))
+        ],
+      ),
+    );
+  }
+
+  AppBar kAppBar() {
+    return AppBar(
+      backgroundColor: kBackgroundColor,
+      centerTitle: true,
+      title: Text(
+        'nama nim title',
+        style: blackTextStyle,
+      ),
+      actions: [
+        IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.account_circle,
+              color: kPrimaryColor,
+              size: 30.0,
+            ))
+      ],
+    );
+  }
+}
+
+class kTabBarView extends StatelessWidget {
+  const kTabBarView({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        movieList(),
+        Text(
+          'Black Panther: Wakanda Forever'.toUpperCase(),
+          style: blackTextStyle.copyWith(fontSize: 20),
+        ),
+        movieTheater()
+      ],
+    );
+  }
+
+  Widget movieTheater() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Chip(
+            backgroundColor: kRedColor,
+            label: Text(
+              'CGV',
+              style: whiteTextStyle.copyWith(fontSize: 11),
+            )),
+        SizedBox(
+          width: 5.0,
+        ),
+        Chip(
+            backgroundColor: kPrimaryColor,
+            label:
+                Text('Cinepolis', style: whiteTextStyle.copyWith(fontSize: 11)))
+      ],
+    );
+  }
+
+  Widget movieList() {
+    return Container(
+      height: 300,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: [movieItem(), movieItem(), movieItem(), movieItem()],
+      ),
+    );
+  }
+
+  Widget movieItem() {
+    return Container(
+      padding: EdgeInsets.only(
+          left: defaultMargin,
+          top: defaultMargin,
+          bottom: defaultMargin), //mengatur margin antar moviebox
+      child: ClipRRect(
+          borderRadius: BorderRadius.circular(defaultCircular),
+          child: Image.asset(
+            'assets/wakanda.jpg',
+            fit: BoxFit.fill, //agar rounded corner imagenya
+          )),
+    );
+  }
+}
+
+class kTabBar extends StatelessWidget {
+  const kTabBar({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 4,
+      initialIndex: 0,
+      child: Column(
+        children: [
+          TabBar(
+              physics: BouncingScrollPhysics(),
+              isScrollable: true,
+              indicatorColor: Colors.transparent,
+              indicatorPadding: EdgeInsets.only(left: 0.0),
+              tabs: [
+                kTabChip('Semua Bioskop', kBlueColor),
+                kTabChip('XXI', kGreyColor),
+                kTabChip('CGV', kGreyColor),
+                kTabChip('Cinepolis', kGreyColor),
+              ]),
+        ],
+      ),
+    );
+  }
+
+  Widget kTabChip(String title, Color color) {
+    return Container(
+        padding: EdgeInsets.all(7.0),
+        decoration: BoxDecoration(
+          border: Border.all(width: 1.0, color: color),
+          borderRadius: BorderRadius.all(Radius.circular(
+                  defaultCircular) //         <--- border radius here
+              ),
+        ),
+        child: Text(
+          title,
+          style: buttonTextStyle,
+        ));
   }
 }
 
@@ -44,8 +211,10 @@ Widget mainStat() {
         children: [
           Column(
             children: [
-              consumedWiget('Eaten', 1127, 'myassets/noodle.png'),
-              consumedWiget('Burned', 102, 'myassets/fire.png')
+              consumedWiget(
+                  'Eaten', 1127, 'assets/undraw_Video_streaming_re_v3qg.png'),
+              consumedWiget(
+                  'Burned', 102, 'assets/undraw_Video_streaming_re_v3qg.png')
             ],
           ),
           const Spacer(),
@@ -61,7 +230,7 @@ Widget mainStat() {
         children: [
           indicatorWidget('Carbs', 12, kPrimaryColor),
           indicatorWidget('Protein', 30, kSecondaryColor),
-          indicatorWidget('Fat', 10, kOrangeColor)
+          indicatorWidget('Fat', 10, kRedColor)
         ],
       )
     ],
@@ -135,132 +304,5 @@ Widget consumedWiget(String title, int number, String assetName) {
         ),
       ],
     ),
-  );
-}
-
-Widget mealListCategory() {
-  return Container(
-    height: 280,
-    child: ListView(
-      physics: BouncingScrollPhysics(),
-      scrollDirection: Axis.horizontal,
-      children: [
-        mealCategoryItem(
-            title: 'Breakfast',
-            description: 'Bread, Peanut Butter, Apple',
-            number: 525,
-            colors: [kOrangeColor, Colors.orange.shade200],
-            assetName: 'myassets/breakfast.png'),
-        mealCategoryItem(
-            title: 'Lunch',
-            description: 'Salmon, Mixed Veggies,Avocado',
-            number: 602,
-            colors: [kPrimaryColor, Colors.lightBlueAccent.shade200],
-            assetName: 'myassets/lunch.png'),
-        mealCategoryItem(
-            title: 'Snack',
-            description: 'Recommended 800 ',
-            colors: [kSecondaryColor, Colors.pinkAccent.withOpacity(0.7)],
-            assetName: 'myassets/watermelon.png'),
-        mealCategoryItem(
-            title: 'Dinner',
-            description: 'Recommended 703 ',
-            colors: [kPrimaryColor, Colors.blue.shade200],
-            assetName: 'myassets/beef.png'),
-      ],
-    ),
-  );
-}
-
-Widget mealCategoryItem(
-    {required String title,
-    required String description,
-    int? number,
-    required List<Color> colors,
-    required String assetName}) {
-  return Stack(
-    children: [
-      Container(
-        width: 140,
-        margin: const EdgeInsets.only(
-            top: defaultMargin,
-            bottom: defaultMargin,
-            left: defaultMargin - 10),
-        decoration: BoxDecoration(
-            boxShadow: [kShadow],
-            gradient: LinearGradient(
-                begin: Alignment.bottomRight,
-                end: Alignment.topLeft,
-                colors: colors),
-            borderRadius: kBorderRadius),
-        child: Stack(
-          children: [
-            //white circle
-            Positioned(
-                top: -60,
-                left: -50,
-                //positioned helps to position widget wherever we want.
-                //position of the widget
-                child: Container(
-                    height: 120,
-                    width: 120,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: kWhiteColor
-                            .withOpacity(0.3) //background color with opacity
-                        ))),
-            Padding(
-              padding: const EdgeInsets.all(defaultMargin - 10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Spacer(
-                    flex: 5,
-                  ),
-                  Text(
-                    title,
-                    style: whiteTextStyle.copyWith(
-                        fontWeight: extraBold, fontSize: 20),
-                  ),
-                  Spacer(),
-                  Text(
-                    description,
-                    style: whiteTextStyle,
-                  ),
-                  Spacer(),
-                  number == null
-                      ? IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.add_circle_rounded,
-                              color: kWhiteColor,
-                              size: 50.0,
-                              shadows: [kShadow]))
-                      : Text(
-                          number.toString(),
-                          style: whiteTextStyle.copyWith(
-                              fontWeight: extraBold, fontSize: 30),
-                        )
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-      Positioned(
-          top: 5,
-          left: 20,
-          child: Container(
-              //imitate the image shadow
-              decoration: BoxDecoration(shape: BoxShape.circle, boxShadow: [
-                BoxShadow(
-                    blurRadius: 20.0,
-                    color: Colors.black38.withOpacity(0.2),
-                    spreadRadius: 2.0,
-                    offset: Offset(8.0, 8.0))
-              ]),
-              child:
-                  Image(width: 60, height: 70, image: AssetImage(assetName)))),
-    ],
   );
 }
