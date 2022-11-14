@@ -1,7 +1,6 @@
-import 'dart:math';
+import 'package:carousel_slider/carousel_slider.dart';
 
 import '../widgets/title_divider.dart';
-import '../widgets/rounded_top_right_container.dart';
 import '/screens/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -15,39 +14,27 @@ class HomePage extends StatelessWidget {
       appBar: kAppBar(),
       body: ListView(children: [
         locationDropdown(),
-        banner(),
+        Banner(),
         TitleDivider(
           title: 'Sedang Tayang',
           buttonTitle: 'Semua',
         ),
-        kTabBar(),
-        kTabBarView(),
-        // RoundedTopRightContainer(child: mainStat()),
-        // TitleDivider(
-        //   title: 'Meals Today',
-        //   buttonTitle: 'Customize',
-        // ),
-        // mealListCategory(),
-        // TitleDivider(
-        //   title: 'Body Measurements',
-        //   buttonTitle: 'Today',
-        // ),
+        const KtabBar(),
+        const KtabBarView(),
+        const VoucherDeal(),
+        TitleDivider(
+          title: 'Akan Datang',
+          buttonTitle: 'Semua',
+        ),
+        const KtabBarView(),
+        bottomHint()
       ]),
-    );
-  }
-
-  Widget banner() {
-    return Container(
-      width: double.infinity,
-      height: 200,
-      color: kSecondaryColor,
-      child: Text('banner'),
     );
   }
 
   Widget locationDropdown() {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 5.0),
+      padding: const EdgeInsets.symmetric(vertical: 5.0),
       color: kGreyColor,
       child: Row(
         children: [
@@ -61,7 +48,7 @@ class HomePage extends StatelessWidget {
             'Surabaya'.toUpperCase(),
             style: blackTextStyle,
           ),
-          Spacer(),
+          const Spacer(),
           IconButton(
               onPressed: () {},
               icon: Icon(
@@ -92,10 +79,217 @@ class HomePage extends StatelessWidget {
       ],
     );
   }
+
+  Widget bottomHint() {
+    return Padding(
+      padding: const EdgeInsets.all(defaultMargin),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(Icons.movie_creation),
+          Text(
+            'Dan...Cut! Yuks coba lihat lagi dari paling atas.',
+            textAlign: TextAlign.center,
+            style: greyTextStyle,
+          ),
+          SizedBox(
+            height: 20.0,
+          ),
+          Text(
+            'Kembali ke atas',
+            style: buttonTextStyle,
+          ),
+        ],
+      ),
+    );
+  }
 }
 
-class kTabBarView extends StatelessWidget {
-  const kTabBarView({
+//Section Banner
+class Banner extends StatelessWidget {
+  const Banner({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        CarouselSlider(
+            items: [
+              bannerItem(),
+              bannerItem(),
+              bannerItem(),
+            ],
+            options: CarouselOptions(
+                enableInfiniteScroll: true,
+                aspectRatio: 16 / 9,
+                autoPlay: true,
+                autoPlayAnimationDuration: Duration(milliseconds: 500))),
+        dots()
+      ],
+    );
+  }
+
+  Widget dots() {
+    return Positioned(
+      bottom: 0,
+      right: 0,
+      left: 0,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          dot(),
+          dot(),
+          dot(),
+          dot(),
+          dot(),
+        ],
+      ),
+    );
+  }
+
+  Widget dot() {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+      width: 10,
+      height: 10,
+      decoration: BoxDecoration(color: kSecondaryColor, shape: BoxShape.circle),
+    );
+  }
+
+  Widget bannerItem() {
+    return Container(
+      width: double.infinity,
+      child: Image.asset(
+        'assets/wakanda.jpg',
+        fit: BoxFit.fill, //agar rounded corner imagenya
+      ),
+    );
+  }
+}
+
+//Section Voucher Deal dan Komponen Childnya
+class VoucherDeal extends StatelessWidget {
+  const VoucherDeal({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: defaultMargin),
+          child: Divider(
+            color: kGreyColor,
+            thickness: 1.0,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: defaultMargin - 10),
+          child: Text(
+            'Voucher Deal!',
+            style: blackTextStyle,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: defaultMargin),
+          child: Text(
+            'Lebih Hemat untuk hiburan Nontonmu',
+            style: greyTextStyle.copyWith(fontSize: 16),
+          ),
+        ),
+        dealList(),
+        Divider(
+          color: kGreyColor,
+          thickness: 1.0,
+        ),
+      ],
+    );
+  }
+
+  Widget dealList() {
+    return Container(
+      padding: EdgeInsets.only(bottom: defaultMargin),
+      height: 320, //dapat juga untuk atur besar kecil moviebox
+      child: ListView(
+        physics: const BouncingScrollPhysics(),
+        scrollDirection: Axis.horizontal,
+        children: [dealItem(), dealItem(), dealItem(), dealItem()],
+      ),
+    );
+  }
+
+  Widget dealItem() {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: defaultMargin,
+        top: defaultMargin,
+      ), //mengatur margi
+      child: SizedBox(
+        width: 300,
+        child: Column(
+          children: [
+            Container(
+              width: double.infinity,
+              height: 150,
+              child: ClipRRect(
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(defaultCircular),
+                      topRight: Radius.circular(defaultCircular)),
+                  child: Image.asset(
+                    'assets/wakanda.jpg',
+                    fit: BoxFit.fill, //agar rounded corner imagenya
+                  )),
+            ),
+            Expanded(
+              child: Container(
+                margin: EdgeInsets.only(bottom: defaultMargin),
+                padding: EdgeInsets.all(15.0),
+                decoration: BoxDecoration(
+                    color: kWhiteColor,
+                    boxShadow: [kShadow],
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(defaultCircular),
+                        bottomRight: Radius.circular(defaultCircular))),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Black Panther: Wakanda Aksesoris',
+                      style: blackTextStyle.copyWith(fontSize: 16),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Periode Tukar 7 Hari',
+                          style: greyTextStyle.copyWith(fontSize: 11),
+                        ),
+                        Text(
+                          'Rp 120.000',
+                          style: blackTextStyle,
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+//Section TabBarView dan Komponen Childnya
+class KtabBarView extends StatelessWidget {
+  const KtabBarView({
     Key? key,
   }) : super(key: key);
 
@@ -123,7 +317,7 @@ class kTabBarView extends StatelessWidget {
               'CGV',
               style: whiteTextStyle.copyWith(fontSize: 11),
             )),
-        SizedBox(
+        const SizedBox(
           width: 5.0,
         ),
         Chip(
@@ -136,8 +330,9 @@ class kTabBarView extends StatelessWidget {
 
   Widget movieList() {
     return Container(
-      height: 300,
+      height: 400, //dapat juga untuk atur besar kecil moviebox
       child: ListView(
+        physics: const BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
         children: [movieItem(), movieItem(), movieItem(), movieItem()],
       ),
@@ -146,7 +341,7 @@ class kTabBarView extends StatelessWidget {
 
   Widget movieItem() {
     return Container(
-      padding: EdgeInsets.only(
+      padding: const EdgeInsets.only(
           left: defaultMargin,
           top: defaultMargin,
           bottom: defaultMargin), //mengatur margin antar moviebox
@@ -160,8 +355,8 @@ class kTabBarView extends StatelessWidget {
   }
 }
 
-class kTabBar extends StatelessWidget {
-  const kTabBar({
+class KtabBar extends StatelessWidget {
+  const KtabBar({
     Key? key,
   }) : super(key: key);
 
@@ -173,10 +368,10 @@ class kTabBar extends StatelessWidget {
       child: Column(
         children: [
           TabBar(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               isScrollable: true,
               indicatorColor: Colors.transparent,
-              indicatorPadding: EdgeInsets.only(left: 0.0),
+              indicatorPadding: const EdgeInsets.only(left: 0.0),
               tabs: [
                 kTabChip('Semua Bioskop', kBlueColor),
                 kTabChip('XXI', kGreyColor),
@@ -190,10 +385,10 @@ class kTabBar extends StatelessWidget {
 
   Widget kTabChip(String title, Color color) {
     return Container(
-        padding: EdgeInsets.all(7.0),
+        padding: const EdgeInsets.all(7.0),
         decoration: BoxDecoration(
           border: Border.all(width: 1.0, color: color),
-          borderRadius: BorderRadius.all(Radius.circular(
+          borderRadius: const BorderRadius.all(Radius.circular(
                   defaultCircular) //         <--- border radius here
               ),
         ),
@@ -202,107 +397,4 @@ class kTabBar extends StatelessWidget {
           style: buttonTextStyle,
         ));
   }
-}
-
-Widget mainStat() {
-  return Column(
-    children: [
-      Row(
-        children: [
-          Column(
-            children: [
-              consumedWiget(
-                  'Eaten', 1127, 'assets/undraw_Video_streaming_re_v3qg.png'),
-              consumedWiget(
-                  'Burned', 102, 'assets/undraw_Video_streaming_re_v3qg.png')
-            ],
-          ),
-          const Spacer(),
-        ],
-      ),
-      Divider(
-        height: 50.0,
-        color: kGreyColor.withOpacity(0.5),
-        thickness: 1.0,
-      ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          indicatorWidget('Carbs', 12, kPrimaryColor),
-          indicatorWidget('Protein', 30, kSecondaryColor),
-          indicatorWidget('Fat', 10, kRedColor)
-        ],
-      )
-    ],
-  );
-}
-
-Widget indicatorWidget(String title, int number, Color mainColor) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(
-        title,
-        style: blackTextStyle.copyWith(fontSize: 18.0),
-      ),
-      SizedBox(
-        height: 10.0,
-      ),
-      SizedBox(
-        height: 10.0,
-      ),
-      Text(
-        '${number}g left',
-        style: greyTextStyle.copyWith(fontSize: 14),
-      )
-    ],
-  );
-}
-
-Widget consumedWiget(String title, int number, String assetName) {
-  return Container(
-    margin: const EdgeInsets.only(top: 20.0),
-    child: Row(
-      children: [
-        Container(
-          margin: const EdgeInsets.only(right: 15.0),
-          width: 3.0,
-          height: 40.0,
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                kPrimaryColor.withOpacity(0.4),
-                kSecondaryColor.withOpacity(0.4)
-              ])),
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: greyTextStyle.copyWith(fontSize: 14.0),
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-            Row(
-              children: [
-                Image(width: 20, height: 20, image: AssetImage(assetName)),
-                Text(
-                  '  $number  ',
-                  style: blackTextStyle.copyWith(fontSize: 18.0),
-                ),
-                Text(
-                  ' kcal',
-                  style: greyTextStyle.copyWith(fontSize: 12.0),
-                )
-              ],
-            )
-          ],
-        ),
-      ],
-    ),
-  );
 }

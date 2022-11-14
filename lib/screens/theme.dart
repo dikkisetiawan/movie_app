@@ -37,7 +37,7 @@ TextStyle whiteTextStyle =
     GoogleFonts.manrope(color: kWhiteColor, fontSize: 14, fontWeight: bold);
 
 TextStyle greyTextStyle =
-    GoogleFonts.manrope(color: kGreyColor, fontSize: 18, fontWeight: bold);
+    GoogleFonts.manrope(color: kDarkGreyColor, fontSize: 18, fontWeight: bold);
 
 TextStyle buttonTextStyle =
     GoogleFonts.manrope(color: kPrimaryColor, fontSize: 14, fontWeight: bold);
@@ -51,7 +51,7 @@ const defaultMargin = 30.0;
 BoxShadow kShadow = BoxShadow(
     blurRadius: 20.0,
     color: Colors.black.withOpacity(0.2),
-    spreadRadius: 5.0,
+    spreadRadius: 2.0,
     offset: Offset(5, 10));
 
 const kBorderRadius = BorderRadius.only(
