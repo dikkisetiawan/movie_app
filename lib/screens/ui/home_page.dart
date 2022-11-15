@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import '/screens/ui/movie_details.dart';
 
 import '../widgets/title_divider.dart';
 import '/screens/theme.dart';
@@ -11,7 +12,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kBackgroundColor,
-      appBar: kAppBar(),
+      appBar: kAppBar(context),
       body: ListView(children: [
         locationDropdown(),
         Banner(),
@@ -60,23 +61,51 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  AppBar kAppBar() {
+  AppBar kAppBar(BuildContext context) {
     return AppBar(
       backgroundColor: kBackgroundColor,
       centerTitle: true,
-      title: Text(
-        'Dini Aryani 20200040030',
-        style: blackTextStyle,
-      ),
+      title: searchField(),
       actions: [
         IconButton(
-            onPressed: () {},
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) => _buildAboutDialog(context),
+              );
+            },
             icon: Icon(
               Icons.account_circle,
               color: kPrimaryColor,
               size: 30.0,
             ))
       ],
+    );
+  }
+
+  Widget searchField() {
+    return SizedBox(
+      height: 40,
+      child: TextFormField(
+        style: whiteTextStyle,
+        decoration: InputDecoration(
+          prefixIcon: Icon(
+            Icons.search,
+            color: kPrimaryColor,
+          ),
+          filled: true,
+          fillColor: kGreyColor,
+          contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+          enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(defaultCircular),
+              borderSide: BorderSide(color: kWhiteColor)),
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(defaultCircular),
+              borderSide: BorderSide(color: kWhiteColor)),
+          hintText: 'Search',
+          hintStyle: greyTextStyle,
+        ),
+      ),
     );
   }
 
@@ -103,6 +132,15 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+
+  _buildAboutDialog(BuildContext context) {
+    return AlertDialog(
+      content: Text(
+        'Dini Aryani 20200040030',
+        style: blackTextStyle,
+      ),
+    );
+  }
 }
 
 //Section Banner
@@ -120,9 +158,9 @@ class Banner extends StatelessWidget {
         children: [
           CarouselSlider(
               items: [
-                bannerItem('sriasih.jpg'),
-                bannerItem('wakanda.jpg'),
-                bannerItem('wakanda.jpg'),
+                bannerItem('sriasih.jpg', context),
+                bannerItem('wakanda.jpg', context),
+                bannerItem('wakanda.jpg', context),
               ],
               options: CarouselOptions(
                   enableInfiniteScroll: true,
@@ -164,15 +202,23 @@ class Banner extends StatelessWidget {
     );
   }
 
-  Widget bannerItem(String imagePath) {
-    return AspectRatio(
-      aspectRatio: 16 / 9,
-      child: ClipRRect(
-          borderRadius: BorderRadius.circular(defaultCircular),
-          child: Image.asset(
-            'assets/$imagePath',
-            fit: BoxFit.cover, //agar rounded corner imagenya
-          )),
+  Widget bannerItem(String imagePath, BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const MovieDetails()),
+        );
+      },
+      child: AspectRatio(
+        aspectRatio: 16 / 9,
+        child: ClipRRect(
+            borderRadius: BorderRadius.circular(defaultCircular),
+            child: Image.asset(
+              'assets/$imagePath',
+              fit: BoxFit.cover, //agar rounded corner imagenya
+            )),
+      ),
     );
   }
 }
@@ -305,7 +351,7 @@ class KtabBarView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        movieList(),
+        movieList(context),
         Text(
           'Black Panther: Wakanda Forever'.toUpperCase(),
           style: blackTextStyle.copyWith(fontSize: 20),
@@ -336,29 +382,42 @@ class KtabBarView extends StatelessWidget {
     );
   }
 
-  Widget movieList() {
+  Widget movieList(BuildContext context) {
     return Container(
       height: 400, //dapat juga untuk atur besar kecil moviebox
       child: ListView(
         physics: const BouncingScrollPhysics(),
         scrollDirection: Axis.horizontal,
-        children: [movieItem(), movieItem(), movieItem(), movieItem()],
+        children: [
+          movieItem(context),
+          movieItem(context),
+          movieItem(context),
+          movieItem(context)
+        ],
       ),
     );
   }
 
-  Widget movieItem() {
-    return Container(
-      padding: const EdgeInsets.only(
-          left: defaultMargin,
-          top: defaultMargin,
-          bottom: defaultMargin), //mengatur margin antar moviebox
-      child: ClipRRect(
-          borderRadius: BorderRadius.circular(defaultCircular),
-          child: Image.asset(
-            'assets/wakanda.jpg',
-            fit: BoxFit.fill, //agar rounded corner imagenya
-          )),
+  Widget movieItem(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const MovieDetails()),
+        );
+      },
+      child: Container(
+        padding: const EdgeInsets.only(
+            left: defaultMargin,
+            top: defaultMargin,
+            bottom: defaultMargin), //mengatur margin antar moviebox
+        child: ClipRRect(
+            borderRadius: BorderRadius.circular(defaultCircular),
+            child: Image.asset(
+              'assets/wakanda.jpg',
+              fit: BoxFit.fill, //agar rounded corner imagenya
+            )),
+      ),
     );
   }
 }
