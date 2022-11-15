@@ -64,7 +64,7 @@ class MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
         elevation: 4.0,
         child: Container(
           margin: const EdgeInsets.all(15.0),
-          child: const Icon(Icons.add),
+          child: const Icon(Icons.arrow_downward),
         ),
       ),
       bottomNavigationBar: BottomAppBar(
@@ -87,7 +87,7 @@ class MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
                 icon: Icon(
                   Icons.home,
                   //darken the icon if it is selected or else give it a different color
-                  color: selectedIndex == 0 ? kPrimaryColor : kGreyColor,
+                  color: selectedIndex == 0 ? kPrimaryColor : kDarkGreyColor,
                 ),
               ),
               IconButton(
@@ -97,7 +97,7 @@ class MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
                 iconSize: 27.0,
                 icon: Icon(
                   Icons.assignment,
-                  color: selectedIndex == 1 ? kPrimaryColor : kGreyColor,
+                  color: selectedIndex == 1 ? kPrimaryColor : kDarkGreyColor,
                 ),
               ),
               //to leave space in between the bottom app bar items and below the FAB
@@ -111,7 +111,7 @@ class MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
                 iconSize: 27.0,
                 icon: Icon(
                   Icons.call_received,
-                  color: selectedIndex == 2 ? kPrimaryColor : kGreyColor,
+                  color: selectedIndex == 2 ? kPrimaryColor : kDarkGreyColor,
                 ),
               ),
               IconButton(
@@ -121,7 +121,7 @@ class MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
                 iconSize: 27.0,
                 icon: Icon(
                   Icons.settings,
-                  color: selectedIndex == 3 ? kPrimaryColor : kGreyColor,
+                  color: selectedIndex == 3 ? kPrimaryColor : kDarkGreyColor,
                 ),
               ),
             ],

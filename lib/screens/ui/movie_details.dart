@@ -11,174 +11,153 @@ class MovieDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kBackgroundColor,
-      body: ListView(
-          physics: const BouncingScrollPhysics(),
-          padding: const EdgeInsets.symmetric(vertical: 10.0),
-          children: [
-            TitleDivider(
-              title: 'Your Program',
-              buttonTitle: 'Details',
+      body: ListView(children: [
+        Header(),
+      ]),
+    );
+  }
+}
+
+class Header extends StatelessWidget {
+  Header({
+    Key? key,
+  }) : super(key: key);
+
+  Map<String, String> movieDescriptionContent = {
+    'Genre': 'Action, Adventure, Drama',
+    'Durasi': '2 jam 41 menit',
+    'Sutradara': 'Ryan Coogler',
+    'Rating': 'SU'
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 400,
+      child: Stack(
+        children: [
+          Container(
+            width: double.infinity,
+            height: 200,
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('assets/wakanda.jpg'),
+                    fit: BoxFit.cover)),
+          ),
+          backButton(),
+          playButton(),
+          Positioned(
+            bottom: 35,
+            left: 20,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [movieImage(), movieDescription()],
             ),
-            RoundedTopRightContainer(
-              colors: [Colors.blue, kPrimaryColor],
-              child: nextWorkoutWidget(),
-            ),
-            Stack(
-              children: [
-                Container(
-                  padding: const EdgeInsets.only(top: 30),
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: defaultMargin),
-                    child: roundedContainer(acknowledgementChildWidget(), 0.0),
-                  ),
-                ),
-                Positioned(
-                    top: -5,
-                    left: 70,
-                    child: Container(
-                      decoration:
-                          BoxDecoration(shape: BoxShape.circle, boxShadow: [
-                        BoxShadow(
-                            blurRadius: 20.0,
-                            color: Colors.black.withOpacity(0.1),
-                            spreadRadius: 1.0,
-                            offset: Offset(5.0, 5.0))
-                      ]),
-                      child: Image(
-                          width: 80,
-                          height: 100,
-                          image: AssetImage(
-                              'assets/undraw_Video_streaming_re_v3qg.png')),
-                    ))
-              ],
-            ),
-            TitleDivider(
-              title: 'Area of Focus',
-              buttonTitle: 'More',
-            ),
-            areaOfFocusGridView()
-          ]),
+          )
+        ],
+      ),
     );
   }
 
-  Widget nextWorkoutWidget() {
+  Widget movieDescription() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 30, left: 10),
+      child: SizedBox(
+        width: 250,
+        child: Column(
+          children: [
+            Text(
+              'Black Panther: Wakanda Forever',
+              style: blackTextStyle.copyWith(letterSpacing: -1),
+            ),
+            const SizedBox(
+              height: 20.0,
+            ),
+            movieDescriptionView()
+          ],
+        ),
+      ),
+    );
+  }
+
+  SingleChildScrollView movieDescriptionView() {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          movieDescriptionTitles(),
+          const SizedBox(
+            width: 10.0,
+          ),
+          movieDescriptionTitlesContent()
+        ],
+      ),
+    );
+  }
+
+  Column movieDescriptionTitlesContent() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text('Next Workout', style: whiteTextStyle.copyWith(fontSize: 14)),
-        const SizedBox(
-          height: 15,
-        ),
-        Text(
-          'Legs Toning and Glutes Workout at Home',
-          style: whiteTextStyle.copyWith(fontSize: 20),
-        ),
-        const SizedBox(
-          height: 15,
-        ),
-        Row(
-          mainAxisAlignment:
-              MainAxisAlignment.spaceBetween, //give space between childrens
-          crossAxisAlignment:
-              CrossAxisAlignment.end, //stick childrens to bottom
-          children: [
-            Row(
-              children: [
-                Icon(
-                  Icons.timer,
-                  size: 18,
-                  color: kWhiteColor,
-                ),
-                Text(
-                  '   68 min',
-                  style: whiteTextStyle.copyWith(fontSize: 12),
-                )
-              ],
-            ),
-            IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.play_circle_fill_rounded,
-                  size: 50,
-                  color: kWhiteColor,
-                  shadows: [kShadow],
-                ))
-          ],
-        )
-      ],
+      children: movieDescriptionContent.values
+          .map((item) => Text(
+                item,
+                style: blackTextStyle.copyWith(fontSize: 14, letterSpacing: -1),
+              ))
+          .toList(),
     );
   }
 
-  Widget roundedContainer(Widget child, double margin) {
+  Column movieDescriptionTitles() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: movieDescriptionContent.keys
+          .map((item) => Text(
+                item,
+                style: greyTextStyle.copyWith(fontSize: 14, letterSpacing: -1),
+              ))
+          .toList(),
+    );
+  }
+
+  Widget movieImage() {
     return Container(
-      margin: const EdgeInsets.only(
-        bottom: defaultMargin,
-      ),
-      padding: EdgeInsets.all(margin),
-      decoration: BoxDecoration(
-          color: kWhiteColor,
-          borderRadius: BorderRadius.circular(defaultCircular),
-          boxShadow: [kShadow]),
-      child: child,
-    );
-  }
-
-  Widget acknowledgementChildWidget() {
-    return Stack(
-      children: [
-        Row(
-          children: [
-            Expanded(
-                flex: 2,
-                child: Container(
-                  decoration: const BoxDecoration(
-                      image: DecorationImage(
-                          alignment: Alignment.centerLeft,
-                          image: AssetImage(
-                              'assets/undraw_Video_streaming_re_v3qg.png'))),
-                  height: 80,
-                )),
-            Expanded(
-              flex: 4,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'You are doing great!',
-                    style: buttonTextStyle.copyWith(fontSize: 16),
-                  ),
-                  Text(
-                    'Keep it up and stick to your plan!',
-                    style: greyTextStyle.copyWith(fontSize: 10),
-                  )
-                ],
-              ),
-            ),
-          ],
+      decoration: BoxDecoration(boxShadow: [kShadow]),
+      width: 120,
+      height: 180,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(defaultCircular),
+        child: Image.asset(
+          'assets/wakanda.jpg',
+          fit: BoxFit.cover,
         ),
-      ],
+      ),
     );
   }
 
-  Widget areaOfFocusGridView() {
-    return GridView.count(
-      padding: const EdgeInsets.symmetric(horizontal: defaultMargin),
-      shrinkWrap: true,
-      crossAxisSpacing: defaultMargin,
-      crossAxisCount: 2,
-      children: [
-        areaOfFocusTile('assets/undraw_Video_streaming_re_v3qg.png'),
-        areaOfFocusTile('assets/undraw_Video_streaming_re_v3qg.png'),
-        areaOfFocusTile('assets/undraw_Video_streaming_re_v3qg.png'),
-        areaOfFocusTile('assets/undraw_Video_streaming_re_v3qg.png'),
-      ],
-    );
+  Positioned playButton() {
+    return Positioned(
+        left: 0,
+        right: 0,
+        top: 50,
+        child: IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.play_circle_fill_rounded,
+              size: 80,
+              color: kWhiteColor.withOpacity(0.8),
+              shadows: [kShadow],
+            )));
   }
 
-  Widget areaOfFocusTile(String imagePath) {
-    return roundedContainer(
-        Image(width: 40, height: 40, image: AssetImage(imagePath)), 0.0);
+  Positioned backButton() {
+    return Positioned(
+        child: IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.arrow_circle_left_rounded,
+              size: 40,
+              color: kSecondaryColor,
+              shadows: [kShadow],
+            )));
   }
 }

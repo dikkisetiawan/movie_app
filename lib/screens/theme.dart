@@ -36,8 +36,8 @@ TextStyle blackTextStyle =
 TextStyle whiteTextStyle =
     GoogleFonts.manrope(color: kWhiteColor, fontSize: 14, fontWeight: bold);
 
-TextStyle greyTextStyle =
-    GoogleFonts.manrope(color: kDarkGreyColor, fontSize: 18, fontWeight: bold);
+TextStyle greyTextStyle = GoogleFonts.manrope(
+    color: kDarkGreyColor, fontSize: 18, fontWeight: regular);
 
 TextStyle buttonTextStyle =
     GoogleFonts.manrope(color: kPrimaryColor, fontSize: 14, fontWeight: bold);

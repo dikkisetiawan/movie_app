@@ -65,7 +65,7 @@ class HomePage extends StatelessWidget {
       backgroundColor: kBackgroundColor,
       centerTitle: true,
       title: Text(
-        'nama nim title',
+        'Dini Aryani 20200040030',
         style: blackTextStyle,
       ),
       actions: [
@@ -113,21 +113,27 @@ class Banner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        CarouselSlider(
-            items: [
-              bannerItem(),
-              bannerItem(),
-              bannerItem(),
-            ],
-            options: CarouselOptions(
-                enableInfiniteScroll: true,
-                aspectRatio: 16 / 9,
-                autoPlay: true,
-                autoPlayAnimationDuration: Duration(milliseconds: 500))),
-        dots()
-      ],
+    return Container(
+      margin: EdgeInsets.only(bottom: defaultMargin),
+      decoration: BoxDecoration(boxShadow: [kShadow]),
+      child: Stack(
+        children: [
+          CarouselSlider(
+              items: [
+                bannerItem('sriasih.jpg'),
+                bannerItem('wakanda.jpg'),
+                bannerItem('wakanda.jpg'),
+              ],
+              options: CarouselOptions(
+                  enableInfiniteScroll: true,
+                  enlargeCenterPage: true,
+                  enlargeStrategy: CenterPageEnlargeStrategy.height,
+                  aspectRatio: 16 / 9,
+                  autoPlay: true,
+                  autoPlayAnimationDuration: Duration(milliseconds: 500))),
+          dots()
+        ],
+      ),
     );
   }
 
@@ -158,13 +164,15 @@ class Banner extends StatelessWidget {
     );
   }
 
-  Widget bannerItem() {
-    return Container(
-      width: double.infinity,
-      child: Image.asset(
-        'assets/wakanda.jpg',
-        fit: BoxFit.fill, //agar rounded corner imagenya
-      ),
+  Widget bannerItem(String imagePath) {
+    return AspectRatio(
+      aspectRatio: 16 / 9,
+      child: ClipRRect(
+          borderRadius: BorderRadius.circular(defaultCircular),
+          child: Image.asset(
+            'assets/$imagePath',
+            fit: BoxFit.cover, //agar rounded corner imagenya
+          )),
     );
   }
 }
